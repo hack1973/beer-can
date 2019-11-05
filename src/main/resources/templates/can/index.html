@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<p th:unless="${cans} and ${cans.size()}">no cans :(</p>
+
+
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+
+    <tr th:each="can : ${cans}">
+        <td th:text="${can.name}"></td>
+        <td th:text="${can.description}"></td>
+    </tr>
+
+</table>
+
+<nav th:fragment="navigation">
+    <a href="/can/add">Add Can</a>
+</nav>
+
+</body>
+</html>
