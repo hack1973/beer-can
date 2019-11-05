@@ -1,6 +1,6 @@
-package org.launchcode.beercan;
+package org.launchcode;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
