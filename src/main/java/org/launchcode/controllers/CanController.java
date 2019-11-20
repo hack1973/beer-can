@@ -57,4 +57,21 @@ public class CanController {
         return "redirect:";
     }
 
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    public String displayDeleteCanForm(Model model) {
+        model.addAttribute("cans", canDao.findAll());
+        model.addAttribute("title", "Delete Can");
+        return "can/delete";
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public String processDeleteCanForm(@RequestParam int[] canIds) {
+
+        for (int canId : canIds) {
+            canDao.deleteById(canId);
+        }
+
+        return "redirect:";
+    }
+
 }

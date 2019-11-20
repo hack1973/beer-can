@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post">
+
+    <div th:each="can : ${cans}" class="checkbox">
+        <input type="checkbox" name="canIds" th:value="${can.id}" th:id="${can.id}"/>
+        <label th:for="${can.id}" th:text="${can.name} + ' / ' + ${can.description}"></label>
+        <br />
+    </div>
+
+    <input type="submit" value="Remove Can" />
+</form>
+
+<nav th:fragment="navigation">
+    <a href="/can/">Can Home</a> |
+    <a href="/can/add">Add Can</a>
+</nav>
+
+</body>
+</html>
