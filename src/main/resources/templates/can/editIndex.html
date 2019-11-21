@@ -14,11 +14,13 @@
 <table class="table">
 
     <tr>
+        <th>Edit</th>
         <th>Name</th>
         <th>Description</th>
     </tr>
 
     <tr th:each="can : ${cans}">
+        <td><a th:href="@{'/can/edit/' + ${can.id}}">edit</a></td>
         <td th:text="${can.name}"></td>
         <td th:text="${can.description}"></td>
     </tr>
@@ -26,9 +28,9 @@
 </table>
 
 <nav th:fragment="navigation">
+    <a href="/can/">Can Home</a> |
     <a href="/can/add">Add Can</a> |
-    <a href="/can/delete">Delete Can</a> |
-    <a href="/can/editIndex">Edit Can</a>
+    <a href="/can/delete">Delete Can</a>
 </nav>
 
 </body>

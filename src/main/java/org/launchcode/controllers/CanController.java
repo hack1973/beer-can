@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * Created by Hackman
@@ -50,11 +48,8 @@ public class CanController {
             return "can/add";
         }
 
-        //Category cat = categoryDao.findOne(categoryId);
-        //newCheese.setCategory(cat);
-
         canDao.save(newCan);
-        return "redirect:";
+        return "redirect:/can";
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.GET)
@@ -71,7 +66,38 @@ public class CanController {
             canDao.deleteById(canId);
         }
 
-        return "redirect:";
+        return "redirect:/can";
+    }
+
+    @RequestMapping(value = "editIndex")
+    public String displayEditIndexForm(Model model) {
+        model.addAttribute("cans", canDao.findAll());
+        model.addAttribute("title", "Cans To Edit");
+
+        return "can/editIndex";
+    }
+
+    @RequestMapping(value = "edit/{canId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int canId) {
+        model.addAttribute("title", "Edit Can");
+        model.addAttribute("can", canDao.findById(canId));
+
+        return "can/edit";
+    }
+
+    @RequestMapping(value = "edit/{canId}", method = RequestMethod.POST)
+    public String processEditForm(@PathVariable int canId, String name, String description)
+    {
+
+        Optional<Can> optional = canDao.findById(canId);
+
+        optional.ifPresent(can -> {
+            can.setName(name);
+            can.setDescription(description);
+            canDao.save(can);
+        });
+
+        return "redirect:/can";
     }
 
 }
