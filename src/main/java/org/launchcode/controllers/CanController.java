@@ -79,8 +79,13 @@ public class CanController {
 
     @RequestMapping(value = "edit/{canId}", method = RequestMethod.GET)
     public String displayEditForm(Model model, @PathVariable int canId) {
-        model.addAttribute("title", "Edit Can");
-        model.addAttribute("can", canDao.findById(canId));
+
+        Optional<Can> optional = canDao.findById(canId);
+        if (optional.isPresent()){
+            model.addAttribute("can", optional.get());
+        } else {
+            return "can/editIndex";
+        }
 
         return "can/edit";
     }
@@ -90,7 +95,6 @@ public class CanController {
     {
 
         Optional<Can> optional = canDao.findById(canId);
-
         optional.ifPresent(can -> {
             can.setName(name);
             can.setDescription(description);
